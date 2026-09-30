@@ -1,55 +1,55 @@
 
-FUNCTION: log_dump_stack DATE:Sep 29 2026 REASON: stack before push
-stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
+FUNCTION: log_dump_stack DATE:Sep 30 2026 REASON: stack before push
+stack_t "val"[0x16b63f060] created by main() at main.cpp:12{
 	size = 0 capacity = 1
-	data[0x150605ea0]
+	data[0x12ae05ea0]
 	{
 		 [0] = 0 (POISON!!!) 
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Sep 29 2026 REASON: stack after push
-stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
+FUNCTION: log_dump_stack DATE:Sep 30 2026 REASON: stack after push
+stack_t "val"[0x16b63f060] created by main() at main.cpp:12{
 	size = 1 capacity = 1
-	data[0x150605ea0]
+	data[0x12ae05ea0]
 	{
 		*[0] = 1
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Sep 29 2026 REASON: stack before push
-stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
+FUNCTION: log_dump_stack DATE:Sep 30 2026 REASON: stack before push
+stack_t "val"[0x16b63f060] created by main() at main.cpp:12{
 	size = 1 capacity = 1
-	data[0x150605ea0]
+	data[0x12ae05ea0]
 	{
 		*[0] = 1
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Sep 29 2026 REASON: stack after push
-stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
+FUNCTION: log_dump_stack DATE:Sep 30 2026 REASON: stack after push
+stack_t "val"[0x16b63f060] created by main() at main.cpp:12{
 	size = 2 capacity = 2
-	data[0x150605ea0]
+	data[0x12ae05ea0]
 	{
 		*[0] = 1
 		*[1] = 2
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Sep 29 2026 REASON: stack before push
-stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
+FUNCTION: log_dump_stack DATE:Sep 30 2026 REASON: stack before push
+stack_t "val"[0x16b63f060] created by main() at main.cpp:12{
 	size = 2 capacity = 2
-	data[0x150605ea0]
+	data[0x12ae05ea0]
 	{
 		*[0] = 1
 		*[1] = 2
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Sep 29 2026 REASON: stack after push
-stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
+FUNCTION: log_dump_stack DATE:Sep 30 2026 REASON: stack after push
+stack_t "val"[0x16b63f060] created by main() at main.cpp:12{
 	size = 3 capacity = 4
-	data[0x150605ea0]
+	data[0x12ae05ea0]
 	{
 		*[0] = 1
 		*[1] = 2
@@ -58,10 +58,10 @@ stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Sep 29 2026 REASON: stack before pop
-stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
+FUNCTION: log_dump_stack DATE:Sep 30 2026 REASON: stack before pop
+stack_t "val"[0x16b63f060] created by main() at main.cpp:12{
 	size = 3 capacity = 4
-	data[0x150605ea0]
+	data[0x12ae05ea0]
 	{
 		*[0] = 1
 		*[1] = 2
@@ -70,10 +70,10 @@ stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Sep 29 2026 REASON: stack before pop
-stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
+FUNCTION: log_dump_stack DATE:Sep 30 2026 REASON: stack before pop
+stack_t "val"[0x16b63f060] created by main() at main.cpp:12{
 	size = 2 capacity = 4
-	data[0x150605ea0]
+	data[0x12ae05ea0]
 	{
 		*[0] = 1
 		*[1] = 2
@@ -82,10 +82,10 @@ stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Sep 29 2026 REASON: stack before pop
-stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
+FUNCTION: log_dump_stack DATE:Sep 30 2026 REASON: stack before pop
+stack_t "val"[0x16b63f060] created by main() at main.cpp:12{
 	size = 2 capacity = 4
-	data[0x150605ea0]
+	data[0x12ae05ea0]
 	{
 		*[0] = 1
 		*[1] = 2
@@ -94,10 +94,10 @@ stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Sep 29 2026 REASON: stack before pop
-stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
+FUNCTION: log_dump_stack DATE:Sep 30 2026 REASON: stack before pop
+stack_t "val"[0x16b63f060] created by main() at main.cpp:12{
 	size = 1 capacity = 4
-	data[0x150605ea0]
+	data[0x12ae05ea0]
 	{
 		*[0] = 1
 		 [1] = 2 (POISON!!!) 
@@ -106,10 +106,10 @@ stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Sep 29 2026 REASON: stack before pop
-stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
+FUNCTION: log_dump_stack DATE:Sep 30 2026 REASON: stack before pop
+stack_t "val"[0x16b63f060] created by main() at main.cpp:12{
 	size = 1 capacity = 4
-	data[0x150605ea0]
+	data[0x12ae05ea0]
 	{
 		*[0] = 1
 		 [1] = 2 (POISON!!!) 
@@ -118,20 +118,21 @@ stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Sep 29 2026 REASON: stack before pop
-stack_t "val"[0x16b65b060] created by main() at main.cpp:12{
+FUNCTION: log_dump_stack DATE:Sep 30 2026 REASON: stack before pop
+stack_t "val"[0x16b63f060] created by main() at main.cpp:12{
 	size = 0 capacity = 8
-	data[0x150605ea0]
+	data[0x12ae05ea0]
 	{
 		 [0] = 1 (POISON!!!) 
 		 [1] = 2 (POISON!!!) 
 		 [2] = 3 (POISON!!!) 
 		 [3] = 0 (POISON!!!) 
-		 [4] = 1348492848 (POISON!!!) 
+		 [4] = 719347248 (POISON!!!) 
 		 [5] = 1 (POISON!!!) 
 		 [6] = 0 (POISON!!!) 
 		 [7] = 0 (POISON!!!) 
 	}
 }
 
-FUNCTION: log_print DATE:Sep 29 2026
+FUNCTION: log_print DATE:Sep 30 2026
+Try to pop void stack

@@ -83,7 +83,7 @@ error_code_e stack_pop(stack_s* stack, stack_element* value) {
     error_code_e error_code = INIT_VALUE;
 
     if (stack->size == 0) {
-        log_print("");
+        log_print("Try to pop void stack");
         return POP_VOID_STACK;
     }
 
