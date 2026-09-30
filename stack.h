@@ -5,7 +5,7 @@ typedef int stack_element; // Введите между typedef и stack_element
 #define STK_MODIFIER "%d"  // Введите после stk модификатор вывода типа данных стека
 #define POISON 1488        // Введите редко (желательно никогда не) встречающиеся значение в стеке
 
-// #define STACK_DEBUG // Закомментируйте для отключения DEBUG режима
+#define STACK_DEBUG // Закомментируйте для отключения DEBUG режима
 
 #ifdef STACK_DEBUG
     #define ON_DBG(...) __VA_ARGS__

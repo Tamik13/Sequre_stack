@@ -1,20 +1,19 @@
 #include "stack.h"
 
-const char* const LOG_FILE_NAME = "log.txt";
-
 error_code_e stack_verify(stack_s* stack) {
     if (stack == NULL) {
-        log_print("stack_verify\n: NULL STACK");
+        log_print_error(NULL_STACK, "stack_verify: ERROR null stack\n");
         return NULL_STACK;
     }
 
     if (stack->capacity == 0) {
-        log_print("stack_verify: ZERO CAPACITY\n");
+        log_print_error(ZERO_CAPACITY, "stack_verify: ERROR zero capacity\n");
         return ZERO_CAPACITY;
     }
 
     if (stack->capacity < stack->size) {
-        log_dump_stack(stack, "stack_verify: size higher then capacity\n");
+        log_print_error(SIZE_HIGHER_CAPACITY, "stack_verify: ERROR size higher capacity\n");
+        log_dump_stack(stack,                 "stack_verify: ERROR size higher capacity\n");
         return SIZE_HIGHER_CAPACITY;
     }
 
@@ -25,9 +24,10 @@ error_code_e stack_verify(stack_s* stack) {
 error_code_e stack_init(stack_s* stack, size_t capacity ON_DBG(, const char* const name, const char* const file, const char* const function, const size_t line)) {
     assert(capacity != 0);
 
-    stack->data     = (stack_element*)calloc(capacity, sizeof(double));
+    stack->data = (stack_element*)calloc(capacity, sizeof(double));
 
     if (stack->data == NULL) {
+        log_print_error(ALLOCATION_ERROR, "stack_init: ERROR during allocation\n");
         return ALLOCATION_ERROR;
     }
 
@@ -35,10 +35,10 @@ error_code_e stack_init(stack_s* stack, size_t capacity ON_DBG(, const char* con
     stack->size     = 0;
 
     ON_DBG(
-        stack->name = name;
-        stack->file = file;
+        stack->name     = name;
+        stack->file     = file;
         stack->function = function;
-        stack->line = line;
+        stack->line     = line;
     )
 
     return SUCCESS;
@@ -50,7 +50,8 @@ error_code_e stack_push(stack_s* stack, stack_element value) {
 
     error_code = stack_verify(stack);
     if (error_code) {
-        log_dump_stack(stack, "error before stack_push during stack_verify\n");
+        log_print_error(error_code, "stack_push: ERROR before push during stack_verify\n");
+        log_dump_stack (stack,      "stack_push: ERROR before push during stack_verify\n");
         return error_code;
     }
 
@@ -61,7 +62,8 @@ error_code_e stack_push(stack_s* stack, stack_element value) {
 
         error_code = stack_verify(stack);
         if (error_code) {
-            log_dump_stack(stack, "error in stack_push after stack_realloc during stack_verify\n");
+            log_print_error(error_code, "stack_push: ERROR after recalloc during stack_verify\n");
+            log_dump_stack (stack,      "stack_push: ERROR after recalloc during stack_verify\n");
             return error_code;
         }
     }
@@ -70,7 +72,8 @@ error_code_e stack_push(stack_s* stack, stack_element value) {
 
     error_code = stack_verify(stack);
     if (error_code) {
-        log_dump_stack(stack, "error after stack_push during stack_verify\n");
+        log_print_error(error_code, "stack_push: ERROR after push during stack_verify\n");
+        log_dump_stack (stack,      "stack_push: ERROR after push during stack_verify\n");
         return error_code;
     }
 
@@ -84,7 +87,7 @@ error_code_e stack_pop(stack_s* stack, stack_element* value) {
     error_code_e error_code = INIT_VALUE;
 
     if (stack->size == 0) {
-        log_print("Try to pop void stack");
+        log_print_error(POP_VOID_STACK, "stack_push: ERROR before pop during check size\n");
         return POP_VOID_STACK;
     }
 
@@ -92,7 +95,8 @@ error_code_e stack_pop(stack_s* stack, stack_element* value) {
 
     error_code = stack_verify(stack);
     if (error_code) {
-        log_dump_stack(stack, "error before stack_pop during stack_verify\n");
+        log_print_error(error_code, "stack_push: ERROR before pop during stack_verify\n");
+        log_dump_stack (stack,      "stack_push: ERROR before pop during stack_verify\n");
         return error_code;
     }
 
@@ -101,7 +105,8 @@ error_code_e stack_pop(stack_s* stack, stack_element* value) {
 
         error_code = stack_verify(stack);
         if (error_code) {
-            log_dump_stack(stack, "error in stack_pop after stack_realloc during stack_verify\n");
+            log_print_error(error_code, "stack_push: ERROR after recalloc during stack_verify\n");
+            log_dump_stack (stack,      "stack_push: ERROR after recalloc during stack_verify\n");
             return error_code;
         }
     }
@@ -112,7 +117,8 @@ error_code_e stack_pop(stack_s* stack, stack_element* value) {
 
     error_code = stack_verify(stack);
     if (error_code) {
-        log_dump_stack(stack, "error after stack_pop during stack_verify\n");
+        log_print_error(error_code, "ERROR after pop during stack_verify\n");
+        log_dump_stack (stack,      "ERROR after pop during stack_verify\n");
         return error_code;
     }
 
@@ -129,11 +135,15 @@ error_code_e stack_reсalloc(stack_s* stack, size_t new_capacity) {
     error_code_e error_code = INIT_VALUE;
 
     error_code = stack_verify(stack);
-    if (error_code) return error_code;
+    if (error_code) {
+        log_print_error(error_code, "stack_recalloc: ERROR before recalloc during stack_verify\n");
+        return error_code;
+    }
 
     stack->data = (stack_element*)realloc((void*)stack->data, new_capacity);
 
     if (stack->data == NULL) {
+        log_print_error(error_code, "stack_recalloc: ERROR during recalloc\n");
         return ALLOCATION_ERROR;
     }
 
@@ -145,7 +155,10 @@ error_code_e stack_reсalloc(stack_s* stack, size_t new_capacity) {
     stack->capacity = new_capacity;
 
     error_code = stack_verify(stack);
-    if (error_code) return error_code;
+    if (error_code) {
+        log_print_error(error_code, "stack_recalloc: ERROR after recalloc during stack_verify\n");
+        return error_code;
+    }
 
     return SUCCESS;
 }
@@ -231,23 +244,6 @@ void log_dump_stack(stack_s* stack, const char* const reason) {
 }
 
 
-void log_print(const char* const massage) {
-    assert(massage != NULL);
 
-    FILE* log_file = fopen(LOG_FILE_NAME, "a");
-
-    if (log_file == NULL) {
-        PRINT_ERROR(ERROR_DURING_OPEN);
-        abort();
-    }
-
-    fprintf(log_file ,"\nFUNCTION: log_print DATE:%s\n", __DATE__);
-    fputs(massage, log_file);
-
-    if (fclose(log_file) == EOF) {
-        PRINT_ERROR(ERROR_DURING_CLOSE);
-        abort();
-    }
-}
 
 
