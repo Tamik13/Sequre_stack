@@ -1,4 +1,4 @@
-#include "debuging.h"
+#include "debugging.h"
 
 
 void log_print(const char* const massage) {

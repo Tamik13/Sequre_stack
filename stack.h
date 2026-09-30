@@ -1,4 +1,4 @@
-#include "debuging.h"
+#include "debugging.h"
 #include <string.h>
 
 typedef int stack_element; // Введите между typedef и stack_element тип данных стека

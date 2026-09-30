@@ -41,6 +41,11 @@ error_code_e stack_init(stack_s* stack, size_t capacity ON_DBG(, const char* con
         stack->line     = line;
     )
 
+    for (size_t ind = 0; ind < stack->capacity; ind++) {
+        ASSERT_FOR_ARR(ind, stack->capacity);
+        stack->data[ind] = POISON;
+    }
+
     return SUCCESS;
 }
 
@@ -87,7 +92,7 @@ error_code_e stack_pop(stack_s* stack, stack_element* value) {
     error_code_e error_code = INIT_VALUE;
 
     if (stack->size == 0) {
-        log_print_error(POP_VOID_STACK, "stack_push: ERROR before pop during check size\n");
+        log_print_error(POP_VOID_STACK, "stack_push: ERROR before pop try pop void stack\n");
         return POP_VOID_STACK;
     }
 

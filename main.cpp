@@ -5,7 +5,7 @@
 int main() {
     error_code_e error_code = INIT_VALUE;
     stack_s stack = {};
-    size_t size = 1;
+    size_t size = 4;
 
     start_logs();
 
