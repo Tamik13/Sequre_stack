@@ -3,8 +3,9 @@
 
 typedef int stack_element; // Введите между typedef и stack_element тип данных стека
 #define STK_MODIFIER "%d"  // Введите после stk модификатор вывода типа данных стека
+#define POISON 1488        // Введите редко (желательно никогда не) встречающиеся значение в стеке
 
-#define STACK_DEBUG // Закомментируйте для отключения DEBUG режима
+// #define STACK_DEBUG // Закомментируйте для отключения DEBUG режима
 
 #ifdef STACK_DEBUG
     #define ON_DBG(...) __VA_ARGS__
@@ -36,9 +37,9 @@ error_code_e stack_push   (stack_s* stack, stack_element  value);
 error_code_e stack_pop    (stack_s* stack, stack_element* value);
 error_code_e stack_destroy(stack_s* stack);
 
-error_code_e stack_verify (stack_s* stack);
-void print_stack_error    (stack_s* stack, error_code_e error);
-void print_stack          (stack_s* stack);
-error_code_e stack_realloc(stack_s* stack, size_t new_capacity);
+error_code_e stack_verify  (stack_s* stack);
+void print_stack_error     (stack_s* stack, error_code_e error);
+void print_stack           (stack_s* stack);
+error_code_e stack_reсalloc(stack_s* stack, size_t new_capacity);
 
 void log_dump_stack(stack_s* stack, const char* const reason);

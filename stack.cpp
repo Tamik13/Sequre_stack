@@ -26,6 +26,11 @@ error_code_e stack_init(stack_s* stack, size_t capacity ON_DBG(, const char* con
     assert(capacity != 0);
 
     stack->data     = (stack_element*)calloc(capacity, sizeof(double));
+
+    if (stack->data == NULL) {
+        return ALLOCATION_ERROR;
+    }
+
     stack->capacity = capacity;
     stack->size     = 0;
 
@@ -35,10 +40,6 @@ error_code_e stack_init(stack_s* stack, size_t capacity ON_DBG(, const char* con
         stack->function = function;
         stack->line = line;
     )
-
-    if (stack->data == NULL) {
-        return ALLOCATION_ERROR;
-    }
 
     return SUCCESS;
 }
@@ -56,7 +57,7 @@ error_code_e stack_push(stack_s* stack, stack_element value) {
     log_dump_stack(stack, "stack before push\n");
 
     if (stack->size == stack->capacity) {
-        stack_realloc(stack, stack->size * HIGHER_COEF);
+        stack_reсalloc(stack, stack->size * HIGHER_COEF);
 
         error_code = stack_verify(stack);
         if (error_code) {
@@ -96,7 +97,7 @@ error_code_e stack_pop(stack_s* stack, stack_element* value) {
     }
 
     if (stack->size <= stack->capacity / LOWER_COEF && stack->capacity / LOWER_COEF ) {
-        stack_realloc(stack, stack->capacity / LOWER_COEF);
+        stack_reсalloc(stack, stack->capacity / LOWER_COEF);
 
         error_code = stack_verify(stack);
         if (error_code) {
@@ -105,7 +106,9 @@ error_code_e stack_pop(stack_s* stack, stack_element* value) {
         }
     }
 
-    *value = stack->data[--stack->size];
+    *value = stack->data[stack->size];
+    stack->size--;
+    stack->data[stack->size] = POISON;
 
     error_code = stack_verify(stack);
     if (error_code) {
@@ -113,13 +116,13 @@ error_code_e stack_pop(stack_s* stack, stack_element* value) {
         return error_code;
     }
 
-    log_dump_stack(stack, "stack before pop\n");
+    log_dump_stack(stack, "stack after pop\n");
 
     return SUCCESS;
 }
 
 
-error_code_e stack_realloc(stack_s* stack, size_t new_capacity) {
+error_code_e stack_reсalloc(stack_s* stack, size_t new_capacity) {
     assert(stack != NULL);
     assert(new_capacity != 0);
 
@@ -134,7 +137,12 @@ error_code_e stack_realloc(stack_s* stack, size_t new_capacity) {
         return ALLOCATION_ERROR;
     }
 
-    stack->capacity *= 2;
+    for (size_t ind = stack->size; ind < new_capacity; ind++) {
+        ASSERT_FOR_ARR(ind, new_capacity);
+        stack->data[ind] = POISON;
+    }
+
+    stack->capacity = new_capacity;
 
     error_code = stack_verify(stack);
     if (error_code) return error_code;
@@ -154,12 +162,14 @@ void print_stack(stack_s* stack) {
     fprintf(stderr,"\tdata[%p]\n", stack->data);
     fprintf(stderr, "\t{\n");
 
-    for (size_t i = 0; i < stack->size; i++) {
-        fprintf(stderr ,"\t\t*[%zu] = " STK_MODIFIER "\n", i, stack->data[i]);
+    for (size_t ind = 0; ind < stack->size; ind++) {
+        ASSERT_FOR_ARR(ind, stack->size);
+        fprintf(stderr ,"\t\t*[%zu] = " STK_MODIFIER "\n", ind, stack->data[ind]);
     }
 
-    for (size_t i = stack->size; i < stack->capacity; i++) {
-        fprintf(stderr ,"\t\t [%zu] = " STK_MODIFIER " (POISON) \n", i, stack->data[i]);
+    for (size_t ind = stack->size; ind < stack->capacity; ind++) {
+        ASSERT_FOR_ARR(ind, stack->capacity);
+        fprintf(stderr ,"\t\t [%zu] = " STK_MODIFIER " (POISON) \n", ind, stack->data[ind]);
     }
 
     fprintf(stderr ,"\t}\n");
@@ -201,12 +211,14 @@ void log_dump_stack(stack_s* stack, const char* const reason) {
     fprintf(log_file,"\tdata[%p]\n", stack->data);
     fprintf(log_file, "\t{\n");
 
-    for (size_t i = 0; i < stack->size; i++) {
-        fprintf(log_file ,"\t\t*[%zu] = " STK_MODIFIER "\n", i, stack->data[i]);
+    for (size_t ind = 0; ind < stack->size; ind++) {
+        ASSERT_FOR_ARR(ind, stack->size);
+        fprintf(log_file ,"\t\t*[%zu] = " STK_MODIFIER "\n", ind, stack->data[ind]);
     }
 
-    for (size_t i = stack->size; i < stack->capacity; i++) {
-        fprintf(log_file ,"\t\t [%zu] = " STK_MODIFIER " (POISON!!!) \n", i, stack->data[i]);
+    for (size_t ind = stack->size; ind < stack->capacity; ind++) {
+        ASSERT_FOR_ARR(ind, stack->capacity);
+        fprintf(log_file ,"\t\t [%zu] = " STK_MODIFIER " (POISON!!!) \n", ind, stack->data[ind]);
     }
 
     fprintf(log_file ,"\t}\n");
