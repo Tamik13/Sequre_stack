@@ -76,6 +76,8 @@ enum error_code_e {
     SIZE_HIGHER_CAPACITY = 7,
     ZERO_CAPACITY        = 8,
     NULL_STACK           = 9,
+    CANARY_IS_DEAD       = 10,
+    REINITIALIZATION     = 11,
     INIT_VALUE           = -1
 };
 

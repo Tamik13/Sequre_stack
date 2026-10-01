@@ -8,7 +8,7 @@ int  char_cmp(const void* const first_elem, const void* const second_elem);
 int main() {
     error_code_e error_code = INIT_VALUE;
     stack_s stack = {};
-    size_t size = 4;
+    size_t size = 10;
 
     start_logs();
 
@@ -79,3 +79,5 @@ int char_cmp(const void* const first_elem, const void* const second_elem) {
 
     return *(const char* const)first_elem - *(const char* const)second_elem;
 }
+
+

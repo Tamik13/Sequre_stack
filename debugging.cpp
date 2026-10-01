@@ -28,9 +28,9 @@ void log_print_error(error_code_e error_code, const char* const massage) {
         abort();
     }
 
-    fprintf(log_file, "\nFUNCTION: log_print DATE:%s\n"    , __DATE__);
+    fprintf(log_file, "\nFUNCTION: log_print_error DATE:%s\n"    , __DATE__);
     fprintf(log_file, "%s"                                 , massage);
-    fprintf(log_file, "ERROR error_code: %d errno_code: %s", error_code, strerror(errno));
+    fprintf(log_file, "ERROR error_code: %d errno_code: %s\n", error_code, strerror(errno));
 
     if (fclose(log_file) == EOF) {
         PRINT_ERROR(ERROR_DURING_CLOSE);
