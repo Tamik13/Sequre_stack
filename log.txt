@@ -1,198 +1,154 @@
 
 FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack before push
-stack_t "val"[0x16b343038] created by main() at main.cpp:15
+stack_t "val"[0x16f993038] created by main() at main.cpp:15
 {
-	size = 0 capacity = 10
-	data[0x13ae05cc4]
+	size = 0 capacity = 1
+	data[0x141606064]
 	{
 		 [0] = 1488 (POISON!!!) 
-		 [1] = 1488 (POISON!!!) 
-		 [2] = 1488 (POISON!!!) 
-		 [3] = 1488 (POISON!!!) 
-		 [4] = 1488 (POISON!!!) 
-		 [5] = 1488 (POISON!!!) 
-		 [6] = 1488 (POISON!!!) 
-		 [7] = 1488 (POISON!!!) 
-		 [8] = 1488 (POISON!!!) 
-		 [9] = 1488 (POISON!!!) 
 	}
 }
 
 FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack after push
-stack_t "val"[0x16b343038] created by main() at main.cpp:15
+stack_t "val"[0x16f993038] created by main() at main.cpp:15
 {
-	size = 1 capacity = 10
-	data[0x13ae05cc4]
+	size = 1 capacity = 1
+	data[0x141606064]
 	{
 		*[0] = 1
-		 [1] = 1488 (POISON!!!) 
-		 [2] = 1488 (POISON!!!) 
-		 [3] = 1488 (POISON!!!) 
-		 [4] = 1488 (POISON!!!) 
-		 [5] = 1488 (POISON!!!) 
-		 [6] = 1488 (POISON!!!) 
-		 [7] = 1488 (POISON!!!) 
-		 [8] = 1488 (POISON!!!) 
-		 [9] = 1488 (POISON!!!) 
 	}
 }
 
 FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack before push
-stack_t "val"[0x16b343038] created by main() at main.cpp:15
+stack_t "val"[0x16f993038] created by main() at main.cpp:15
 {
-	size = 1 capacity = 10
-	data[0x13ae05cc4]
+	size = 1 capacity = 1
+	data[0x141606064]
 	{
 		*[0] = 1
-		 [1] = 1488 (POISON!!!) 
-		 [2] = 1488 (POISON!!!) 
-		 [3] = 1488 (POISON!!!) 
-		 [4] = 1488 (POISON!!!) 
-		 [5] = 1488 (POISON!!!) 
-		 [6] = 1488 (POISON!!!) 
-		 [7] = 1488 (POISON!!!) 
-		 [8] = 1488 (POISON!!!) 
-		 [9] = 1488 (POISON!!!) 
 	}
 }
 
 FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack after push
-stack_t "val"[0x16b343038] created by main() at main.cpp:15
+stack_t "val"[0x16f993038] created by main() at main.cpp:15
 {
-	size = 2 capacity = 10
-	data[0x13ae05cc4]
+	size = 2 capacity = 2
+	data[0x141606064]
 	{
 		*[0] = 1
 		*[1] = 2
-		 [2] = 1488 (POISON!!!) 
-		 [3] = 1488 (POISON!!!) 
-		 [4] = 1488 (POISON!!!) 
-		 [5] = 1488 (POISON!!!) 
-		 [6] = 1488 (POISON!!!) 
-		 [7] = 1488 (POISON!!!) 
-		 [8] = 1488 (POISON!!!) 
-		 [9] = 1488 (POISON!!!) 
 	}
 }
 
 FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack before push
-stack_t "val"[0x16b343038] created by main() at main.cpp:15
+stack_t "val"[0x16f993038] created by main() at main.cpp:15
 {
-	size = 2 capacity = 10
-	data[0x13ae05cc4]
+	size = 2 capacity = 2
+	data[0x141606064]
 	{
 		*[0] = 1
 		*[1] = 2
-		 [2] = 1488 (POISON!!!) 
-		 [3] = 1488 (POISON!!!) 
-		 [4] = 1488 (POISON!!!) 
-		 [5] = 1488 (POISON!!!) 
-		 [6] = 1488 (POISON!!!) 
-		 [7] = 1488 (POISON!!!) 
-		 [8] = 1488 (POISON!!!) 
-		 [9] = 1488 (POISON!!!) 
 	}
 }
 
 FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack after push
-stack_t "val"[0x16b343038] created by main() at main.cpp:15
+stack_t "val"[0x16f993038] created by main() at main.cpp:15
 {
-	size = 3 capacity = 10
-	data[0x13ae05cc4]
+	size = 3 capacity = 4
+	data[0x141606064]
 	{
 		*[0] = 1
 		*[1] = 2
 		*[2] = 3
 		 [3] = 1488 (POISON!!!) 
-		 [4] = 1488 (POISON!!!) 
-		 [5] = 1488 (POISON!!!) 
-		 [6] = 1488 (POISON!!!) 
-		 [7] = 1488 (POISON!!!) 
-		 [8] = 1488 (POISON!!!) 
-		 [9] = 1488 (POISON!!!) 
 	}
 }
 
 FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack before pop
-stack_t "val"[0x16b343038] created by main() at main.cpp:15
+stack_t "val"[0x16f993038] created by main() at main.cpp:15
 {
-	size = 3 capacity = 10
-	data[0x13ae05cc4]
+	size = 3 capacity = 4
+	data[0x141606064]
 	{
 		*[0] = 1
 		*[1] = 2
 		*[2] = 3
 		 [3] = 1488 (POISON!!!) 
-		 [4] = 1488 (POISON!!!) 
-		 [5] = 1488 (POISON!!!) 
-		 [6] = 1488 (POISON!!!) 
-		 [7] = 1488 (POISON!!!) 
-		 [8] = 1488 (POISON!!!) 
-		 [9] = 1488 (POISON!!!) 
 	}
 }
 
 FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack after pop
-stack_t "val"[0x16b343038] created by main() at main.cpp:15
+stack_t "val"[0x16f993038] created by main() at main.cpp:15
 {
-	size = 2 capacity = 10
-	data[0x13ae05cc4]
+	size = 2 capacity = 4
+	data[0x141606064]
 	{
 		*[0] = 1
 		*[1] = 2
 		 [2] = 1488 (POISON!!!) 
 		 [3] = 1488 (POISON!!!) 
-		 [4] = 1488 (POISON!!!) 
-		 [5] = 1488 (POISON!!!) 
-		 [6] = 1488 (POISON!!!) 
-		 [7] = 1488 (POISON!!!) 
-		 [8] = 1488 (POISON!!!) 
-		 [9] = 1488 (POISON!!!) 
 	}
 }
 
 FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack before pop
-stack_t "val"[0x16b343038] created by main() at main.cpp:15
+stack_t "val"[0x16f993038] created by main() at main.cpp:15
 {
-	size = 2 capacity = 10
-	data[0x13ae05cc4]
+	size = 2 capacity = 4
+	data[0x141606064]
 	{
 		*[0] = 1
 		*[1] = 2
 		 [2] = 1488 (POISON!!!) 
 		 [3] = 1488 (POISON!!!) 
-		 [4] = 1488 (POISON!!!) 
-		 [5] = 1488 (POISON!!!) 
-		 [6] = 1488 (POISON!!!) 
-		 [7] = 1488 (POISON!!!) 
-		 [8] = 1488 (POISON!!!) 
-		 [9] = 1488 (POISON!!!) 
+	}
+}
+
+FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack after pop
+stack_t "val"[0x16f993038] created by main() at main.cpp:15
+{
+	size = 1 capacity = 4
+	data[0x141606064]
+	{
+		*[0] = 1
+		 [1] = 1488 (POISON!!!) 
+		 [2] = 1488 (POISON!!!) 
+		 [3] = 1488 (POISON!!!) 
+	}
+}
+
+FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack before pop
+stack_t "val"[0x16f993038] created by main() at main.cpp:15
+{
+	size = 1 capacity = 4
+	data[0x141606064]
+	{
+		*[0] = 1
+		 [1] = 1488 (POISON!!!) 
+		 [2] = 1488 (POISON!!!) 
+		 [3] = 1488 (POISON!!!) 
+	}
+}
+
+FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack after pop
+stack_t "val"[0x16f993038] created by main() at main.cpp:15
+{
+	size = 0 capacity = 1
+	data[0x141606064]
+	{
+		 [0] = 1488 (POISON!!!) 
 	}
 }
 
 FUNCTION: log_print_error DATE:Oct  1 2026
-stack_verify: ERROR second canary in data IS DEAD(((
-ERROR error_code: 9 errno_code: Undefined error: 0
+stack_push: ERROR before pop try pop void stack
+ERROR error_code: 4 errno_code: Undefined error: 0
 
-FUNCTION: log_print_error DATE:Oct  1 2026
-stack_recalloc: ERROR after recalloc during stack_verify
-ERROR error_code: 10 errno_code: Undefined error: 0
-
-FUNCTION: log_print_error DATE:Oct  1 2026
-stack_verify: ERROR second canary in data IS DEAD(((
-ERROR error_code: 9 errno_code: Undefined error: 0
-
-FUNCTION: log_print_error DATE:Oct  1 2026
-stack_push: ERROR after recalloc during stack_verify
-ERROR error_code: 10 errno_code: Undefined error: 0
-
-FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack_push: ERROR after recalloc during stack_verify
-stack_t "val"[0x16b343038] created by main() at main.cpp:15
+FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack_push: ERROR before pop try pop void stack
+stack_t "val"[0x16f993038] created by main() at main.cpp:15
 {
-	size = 2 capacity = 2
-	data[0x13ae05cc0]
+	size = 0 capacity = 1
+	data[0x141606064]
 	{
-		*[0] = 676767
-		*[1] = 1
+		 [0] = 1488 (POISON!!!) 
 	}
 }

@@ -1,7 +1,5 @@
 #include "stack.h"
 
-// TODO: stack_destroy
-
 error_code_e stack_verify(stack_s* stack) {
     if (stack == NULL) {
         log_print_error(NULL_STACK, "stack_verify: ERROR null stack\n");
@@ -90,7 +88,10 @@ error_code_e stack_push(stack_s* stack, stack_element value) {
     error_code = stack_verify(stack);
     if (error_code) {
         log_print_error(error_code, "stack_push: ERROR before push during stack_verify\n");
-        // TODO log_dump_stack (stack,      "stack_push: ERROR before push during stack_verify\n");
+
+        if (error_code != CANARY_IS_DEAD) {
+            log_dump_stack (stack,  "stack_push: ERROR before push during stack_verify\n");
+        }
         return error_code;
     }
 
@@ -102,7 +103,10 @@ error_code_e stack_push(stack_s* stack, stack_element value) {
         error_code = stack_verify(stack);
         if (error_code) {
             log_print_error(error_code, "stack_push: ERROR after recalloc during stack_verify\n");
-            // TODO log_dump_stack (stack,      "stack_push: ERROR after recalloc during stack_verify\n");
+
+            if (error_code != CANARY_IS_DEAD) {
+                log_dump_stack (stack,  "stack_push: ERROR after recalloc during stack_verify\n");
+            }
             return error_code;
         }
     }
@@ -114,7 +118,7 @@ error_code_e stack_push(stack_s* stack, stack_element value) {
         log_print_error(error_code, "stack_push: ERROR after push during stack_verify\n");
 
         if (error_code != CANARY_IS_DEAD) {
-            log_dump_stack (stack,      "stack_push: ERROR after push during stack_verify\n");
+            log_dump_stack (stack,  "stack_push: ERROR after push during stack_verify\n");
         }
 
         return error_code;
@@ -131,6 +135,7 @@ error_code_e stack_pop(stack_s* stack, stack_element* value) {
 
     if (stack->size == 0) {
         log_print_error(POP_VOID_STACK, "stack_push: ERROR before pop try pop void stack\n");
+        log_dump_stack (stack,          "stack_push: ERROR before pop try pop void stack\n");
         return POP_VOID_STACK;
     }
 
@@ -139,7 +144,10 @@ error_code_e stack_pop(stack_s* stack, stack_element* value) {
     error_code = stack_verify(stack);
     if (error_code) {
         log_print_error(error_code, "stack_push: ERROR before pop during stack_verify\n");
-        log_dump_stack (stack,      "stack_push: ERROR before pop during stack_verify\n");
+
+        if (error_code != CANARY_IS_DEAD) {
+            log_dump_stack (stack,  "stack_push: ERROR before pop during stack_verify\n");
+        }
         return error_code;
     }
 
@@ -149,7 +157,10 @@ error_code_e stack_pop(stack_s* stack, stack_element* value) {
         error_code = stack_verify(stack);
         if (error_code) {
             log_print_error(error_code, "stack_push: ERROR after recalloc during stack_verify\n");
-            log_dump_stack (stack,      "stack_push: ERROR after recalloc during stack_verify\n");
+
+            if (error_code != CANARY_IS_DEAD) {
+                log_dump_stack (stack,  "stack_push: ERROR after recalloc during stack_verify\n");
+            }
             return error_code;
         }
     }
@@ -161,7 +172,10 @@ error_code_e stack_pop(stack_s* stack, stack_element* value) {
     error_code = stack_verify(stack);
     if (error_code) {
         log_print_error(error_code, "ERROR after pop during stack_verify\n");
-        log_dump_stack (stack,      "ERROR after pop during stack_verify\n");
+
+        if (error_code != CANARY_IS_DEAD) {
+            log_dump_stack (stack,  "ERROR after pop during stack_verify\n");
+        }
         return error_code;
     }
 
@@ -208,12 +222,15 @@ error_code_e stack_reсalloc(stack_s* stack, size_t new_capacity) {
         return error_code;
     }
 
-    stack->data = (stack_element*)realloc((void*)stack->_real_data, new_capacity);
+    stack->_real_data = (stack_element*)realloc((void*)stack->_real_data, new_capacity);
 
     if (stack->data == NULL) {
         log_print_error(error_code, "stack_recalloc: ERROR during recalloc\n");
         return ALLOCATION_ERROR;
     }
+
+    stack->_real_data[0]         = LEFT_CANARY;
+    stack->data[new_capacity] = RIGHT_CANARY;
 
     for (size_t ind = stack->size; ind < new_capacity; ind++) {
         ASSERT_FOR_ARR(ind, new_capacity);

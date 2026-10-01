@@ -45,7 +45,6 @@
                                                                                                     \
     fprintf(stderr, "\n");
 
-
 #define RED    "91"
 #define GREEN  "92"
 #define BLUE   "94"

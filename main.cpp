@@ -8,7 +8,7 @@ int  char_cmp(const void* const first_elem, const void* const second_elem);
 int main() {
     error_code_e error_code = INIT_VALUE;
     stack_s stack = {};
-    size_t size = 10;
+    size_t size = 1;
 
     start_logs();
 
@@ -50,11 +50,21 @@ int main() {
         return error_code;
     }
 
+    error_code = stack_pop(&stack, &pop_element);
+    if (error_code != SUCCESS) {
+        PRINT_ERROR(error_code)
+        return error_code;
+    }
+
+    error_code = stack_pop(&stack, &pop_element);
+    if (error_code != SUCCESS) {
+        PRINT_ERROR(error_code)
+        return error_code;
+    }
+
     very_smart_function(&stack);
 
-    $ANCHOR
     error_code = stack_push(&stack, 2);
-    $ANCHOR
     if (error_code) {
         PRINT_ERROR(error_code)
         return error_code;
@@ -68,9 +78,7 @@ int main() {
 void very_smart_function(stack_s* const stack) {
     assert(stack != NULL);
 
-    $ANCHOR
     qsort(stack, sizeof(*stack), sizeof(char), char_cmp);
-    $ANCHOR
 }
 
 int char_cmp(const void* const first_elem, const void* const second_elem) {
