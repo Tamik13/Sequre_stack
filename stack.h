@@ -32,10 +32,10 @@ struct stack_s {
         const char* file     = NULL;
         const char* function = NULL;
         size_t line          = 0;
-        unsigned long hash = 0;
+        unsigned long hash   = 0;
     )
 
-    stack_element* _real_data = NULL;
+    stack_element* _real_data = NULL; //TODO убрать из releas
     stack_element* data       = NULL;
     size_t size               = 0;
     size_t capacity           = 0;

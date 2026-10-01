@@ -70,15 +70,13 @@ int main() {
 //     }
 
 
-    stack.name = "";
-
-    error_code = stack_push(&stack, 2);
-    if (error_code) {
-        PRINT_ERROR(error_code)
-        return error_code;
-    }
-
-    $ANCHOR
+//     stack.name = "";
+//
+//     error_code = stack_push(&stack, 2);
+//     if (error_code) {
+//         PRINT_ERROR(error_code)
+//         return error_code;
+//     }
 
     stack.data = NULL;
 
