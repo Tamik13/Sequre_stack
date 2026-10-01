@@ -6,13 +6,12 @@ void very_smart_function(stack_s* const stack);
 int  char_cmp(const void* const first_elem, const void* const second_elem);
 
 int main() {
+    start_logs();
     error_code_e error_code = INIT_VALUE;
     stack_s stack = {};
     size_t size = 1;
 
-    start_logs();
-
-    error_code = stack_init(&stack, size ON_DBG(, TO_STR(val), __FILE__, __FUNCTION__, __LINE__));
+    error_code = stack_init(&stack, size ON_DBG(, "stack", __FILE__, __FUNCTION__, __LINE__));
     if (error_code) {
         PRINT_ERROR(error_code)
         return error_code;
@@ -24,7 +23,7 @@ int main() {
         return error_code;
     }
 
-    error_code = stack_push(&stack, 2);
+    error_code = stack_push(&stack, 123);
     if (error_code) {
         PRINT_ERROR(error_code)
         return error_code;
@@ -50,25 +49,45 @@ int main() {
         return error_code;
     }
 
-    error_code = stack_pop(&stack, &pop_element);
-    if (error_code != SUCCESS) {
-        PRINT_ERROR(error_code)
-        return error_code;
-    }
+//     error_code = stack_pop(&stack, &pop_element);
+//     if (error_code != SUCCESS) {
+//         PRINT_ERROR(error_code)
+//         return error_code;
+//     }
+//
+//     error_code = stack_pop(&stack, &pop_element);
+//     if (error_code != SUCCESS) {
+//         PRINT_ERROR(error_code)
+//         return error_code;
+//     }
 
-    error_code = stack_pop(&stack, &pop_element);
-    if (error_code != SUCCESS) {
-        PRINT_ERROR(error_code)
-        return error_code;
-    }
+//     very_smart_function(&stack);
+//
+//     error_code = stack_push(&stack, 2);
+//     if (error_code) {
+//         PRINT_ERROR(error_code)
+//         return error_code;
+//     }
 
-    very_smart_function(&stack);
+
+    stack.name = "";
 
     error_code = stack_push(&stack, 2);
     if (error_code) {
         PRINT_ERROR(error_code)
         return error_code;
     }
+
+    $ANCHOR
+
+    stack.data = NULL;
+
+    error_code = stack_push(&stack, 2);
+    if (error_code) {
+        PRINT_ERROR(error_code)
+        return error_code;
+    }
+
 
 
     return 0;

@@ -39,6 +39,19 @@ void log_print_error(error_code_e error_code, const char* const massage) {
 }
 
 
+unsigned long djb2_hash(const char* str, const size_t size) {
+    assert(str != NULL);
+
+    unsigned long hash = 5381;
+
+    for (size_t ind = 0; ind < size; ind++) {
+        hash = ((hash << 5) + hash) + (unsigned long)str[ind];
+    }
+
+    return hash;
+}
+
+
 void $print_strptr_arr(const char* const arr[], const size_t size) {
     assert(arr != NULL);
 
