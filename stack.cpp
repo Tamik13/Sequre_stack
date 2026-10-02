@@ -28,7 +28,7 @@ error_code_e stack_verify(stack_s* const stack) {
         return HASH_CHANGED;
     }
 
-    unsigned long new_data_hash   = djb2_hash((const char*)stack->_real_data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
+    unsigned long new_data_hash   = djb2_hash((const unsigned char*)stack->_real_data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
     stack->struct_hash = new_struct_hash;
 
     if (stack->_real_data[0] != LEFT_CANARY) {
@@ -158,8 +158,8 @@ error_code_e stack_push(stack_s* const stack, const stack_element value) {
     stack->struct_hash = 0;
     stack->data_hash   = 0;
 
-    stack->struct_hash = djb2_hash((const char*)stack, sizeof(*stack));
-    stack->data_hash   = djb2_hash((const char*)stack->_real_data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
+    stack->struct_hash = djb2_hash((const unsigned char*)stack, sizeof(*stack));
+    stack->data_hash   = djb2_hash((const unsigned char*)stack->_real_data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
     )
 
     error_code = stack_verify(stack);
@@ -312,8 +312,8 @@ error_code_e stack_recalloc(stack_s* const stack, const size_t new_capacity) {
     stack->struct_hash = 0;
     stack->data_hash   = 0;
 
-    stack->struct_hash = djb2_hash((const char*)stack, sizeof(*stack));
-    stack->data_hash   = djb2_hash((const char*)stack->_real_data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
+    stack->struct_hash = djb2_hash((const unsigned char*)stack, sizeof(*stack));
+    stack->data_hash   = djb2_hash((const unsigned char*)stack->_real_data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
     )
 
     error_code = stack_verify(stack);
