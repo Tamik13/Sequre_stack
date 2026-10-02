@@ -18,7 +18,7 @@ typedef int stack_element; // Введите между typedef и stack_element
 
 const size_t        COUNT_CANARY      = 2;
 const size_t        COUNT_LEFT_CANARY = 1;
-const size_t        CANARY_SIZE       = 1;                  // единица измерения - sizeof(stack_elemnet)
+const size_t        CANARY_SIZE       = 1;  // единица измерения - sizeof(stack_elemnet)
 const stack_element LEFT_CANARY       = (stack_element)0xDEADBABE;
 const stack_element RIGHT_CANARY      = (stack_element)0xBADCAFE;
 

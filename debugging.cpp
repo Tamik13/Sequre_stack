@@ -30,7 +30,7 @@ void log_print_error(error_code_e error_code, const char* const message) {
 
     fprintf(log_file, "\nFUNCTION: log_print_error DATE:%s\n"    , __DATE__);
     fprintf(log_file, "%s"                                 , message);
-    fprintf(log_file, "ERROR error_code: %d errno_code: %s\n", error_code, strerror(errno));
+    fprintf(log_file, "ERROR error_code: %s errno_code: %s\n", my_str_error(error_code), strerror(errno));
 
     if (fclose(log_file) == EOF) {
         PRINT_ERROR(ERROR_DURING_CLOSE);
@@ -119,6 +119,56 @@ void $debug_qsort(const int* array, const size_t size, const size_t left, const 
                         left,      right,*(int*)middle_el,             reason);
 
     getchar();
+}
+
+
+const char* my_str_error(const error_code_e error_code) {
+    switch (error_code) {
+        case SUCCESS:
+            return "SUCCESS: 0";
+
+        case INCORRECT_SIZE:
+            return "INCORRECT SIZE: 1";
+
+        case NULL_PARAM:
+            return "NULL PARAM: 2";
+
+        case ALLOCATION_ERROR:
+            return "ALLOCATION ERROR: 3";
+
+        case POP_VOID_STACK:
+            return "POP VOID STACK: 4";
+
+        case ERROR_DURING_OPEN:
+            return "ERROR DURING OPEN: 5";
+
+        case ERROR_DURING_CLOSE:
+            return "ERROR DURING CLOSE: 6";
+
+        case SIZE_HIGHER_CAPACITY:
+            return "SIZE HIGHER CAPACITY: 7";
+
+        case ZERO_CAPACITY:
+            return "ZERO CAPACITY: 8";
+
+        case NULL_STACK:
+            return "NULL STACK: 9";
+
+        case CANARY_IS_DEAD:
+            return "CANARY IS DEAD: 10";
+
+        case REINITIALIZATION:
+            return "REINITIALIZATION: 11";
+
+        case HASH_CHANGED:
+            return "HASH CHANGED: 12";
+
+        case INIT_VALUE:
+            return "INIT VALUE: -1";
+
+        default:
+            return "UNEXPECTED ERROR";
+    }
 }
 
 
