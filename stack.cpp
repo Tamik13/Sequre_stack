@@ -433,7 +433,7 @@ void log_dump_stack(const stack_s* const stack, const char* const reason) {
     fprintf(log_file,"\t_real_data[%p]\n", stack->_real_data);
     fprintf(log_file, "\t{\n");
 
-    fprintf(log_file, "\t\t [%zu] = " STK_MODIFIER " (CANARY!!!)\n", (size_t)0, stack->_real_data[0]); // ???(size_t)0 почему компилятор думает что 0 это int ???
+    fprintf(log_file, "\t\t [%zu] = " CANARY_MODIFIER " (CANARY!!!)\n", (size_t)0, stack->_real_data[0]); // ???(size_t)0 почему компилятор думает что 0 это int ???
 
     for (size_t ind = 0; ind < stack->size; ind++) {
         ASSERT_FOR_ARR(ind, stack->size);
@@ -445,7 +445,7 @@ void log_dump_stack(const stack_s* const stack, const char* const reason) {
         fprintf(log_file ,"\t\t [%zu] = " STK_MODIFIER " (POISON!!!) \n", ind + 1, stack->data[ind]);
     }
 
-    fprintf(log_file, "\t\t [%zu] = " STK_MODIFIER " (CANARY!!!)\n", stack->capacity + 1, stack->data[stack->capacity]);
+    fprintf(log_file, "\t\t [%zu] = " CANARY_MODIFIER " (CANARY!!!)\n", stack->capacity + 1, stack->data[stack->capacity]);
 
     fprintf(log_file ,"\t}\n");
 

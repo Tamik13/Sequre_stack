@@ -48,25 +48,20 @@ int main() {
         PRINT_ERROR(error_code)
         return error_code;
     }
-
-    error_code = stack_pop(&stack, &pop_element);
-    if (error_code != SUCCESS) {
-        PRINT_ERROR(error_code)
-        return error_code;
-    }
-
-    error_code = stack_pop(&stack, &pop_element);
-    if (error_code != SUCCESS) {
-        PRINT_ERROR(error_code)
-        return error_code;
-    }
-
-    // git add .
-    // git commit -m ""
-    // git pull --rebase
-    // git push
-
 //
+//     error_code = stack_pop(&stack, &pop_element);
+//     if (error_code != SUCCESS) {
+//         PRINT_ERROR(error_code)
+//         return error_code;
+//     }
+//
+//     error_code = stack_pop(&stack, &pop_element);
+//     if (error_code != SUCCESS) {
+//         PRINT_ERROR(error_code)
+//         return error_code;
+//     }
+
+
 //     very_smart_function(&stack);
 //
 //     error_code = stack_push(&stack, 2);
@@ -74,8 +69,8 @@ int main() {
 //         PRINT_ERROR(error_code)
 //         return error_code;
 //     }
-//
-//
+
+
 //     stack.name = "";
 //
 //     error_code = stack_push(&stack, 2);
@@ -83,7 +78,7 @@ int main() {
 //         PRINT_ERROR(error_code)
 //         return error_code;
 //     }
-//
+
 //     stack.data = NULL;
 //
 //     error_code = stack_push(&stack, 2);
@@ -91,23 +86,23 @@ int main() {
 //         PRINT_ERROR(error_code)
 //         return error_code;
 //     }
-//
-//     stack.data[4] = 148;
-//
-//     error_code = stack_push(&stack, 2);
-//     if (error_code) {
-//         PRINT_ERROR(error_code)
-//         return error_code;
-//     }
-//
-//     stack.data[4] = 148;
-//
-//     error_code = stack_push(&stack, 2);
-//     if (error_code) {
-//         PRINT_ERROR(error_code)
-//         return error_code;
-//     }
-//
+
+    stack.data[4] = 148;
+
+    error_code = stack_push(&stack, 2);
+    if (error_code) {
+        PRINT_ERROR(error_code)
+        return error_code;
+    }
+
+    stack.data[4] = 148;
+
+    error_code = stack_push(&stack, 2);
+    if (error_code) {
+        PRINT_ERROR(error_code)
+        return error_code;
+    }
+
 
 
     return 0;
