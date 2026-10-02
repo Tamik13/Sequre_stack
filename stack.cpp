@@ -8,12 +8,12 @@ error_code_e stack_verify(stack_s* const stack) {
 
     ON_DBG(
     if (stack->_left_canary != LEFT_CANARY) {
-        log_print_error(NULL_STACK, "stack_verify: ERROR first canary in struct IS DEAD(((\n");
+        log_print_error(CANARY_IS_DEAD, "stack_verify: ERROR first canary in struct IS DEAD(((\n");
         return CANARY_IS_DEAD;
     }
 
     if (stack->_right_canary != RIGHT_CANARY) {
-        log_print_error(NULL_STACK, "stack_verify: ERROR second canary in struct IS DEAD(((\n");
+        log_print_error(CANARY_IS_DEAD, "stack_verify: ERROR second canary in struct IS DEAD(((\n");
         return CANARY_IS_DEAD;
     }
 
@@ -21,23 +21,23 @@ error_code_e stack_verify(stack_s* const stack) {
     unsigned long old_data_hash   = stack->data_hash; // TODO: _name разобраться
     stack->       struct_hash     = 0;
     stack->       data_hash       = 0;
-    unsigned long new_struct_hash = djb2_hash((const char*)stack, sizeof(*stack));
+    unsigned long new_struct_hash = djb2_hash((const unsigned char*)stack, sizeof(*stack));
 
     if (old_struct_hash != new_struct_hash) {
         log_print_error(HASH_CHANGED, "stack_verify: ERROR new_hash != old_hash\n");
         return HASH_CHANGED;
     }
 
-    unsigned long new_data_hash   = djb2_hash((const char*)stack->data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
+    unsigned long new_data_hash   = djb2_hash((const char*)stack->_real_data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
     stack->struct_hash = new_struct_hash;
 
     if (stack->_real_data[0] != LEFT_CANARY) {
-        log_print_error(NULL_STACK, "stack_verify: ERROR first canary in data IS DEAD(((\n");
+        log_print_error(CANARY_IS_DEAD, "stack_verify: ERROR first canary in data IS DEAD(((\n");
         return CANARY_IS_DEAD;
     }
 
     if (stack->data[stack->capacity] != RIGHT_CANARY) {
-        log_print_error(NULL_STACK, "stack_verify: ERROR second canary in data IS DEAD(((\n");
+        log_print_error(CANARY_IS_DEAD, "stack_verify: ERROR second canary in data IS DEAD(((\n");
         return CANARY_IS_DEAD;
     }
 
@@ -76,7 +76,7 @@ error_code_e stack_init(stack_s* const stack, const size_t capacity ON_DBG(, con
         return REINITIALIZATION;
     }
 
-    stack->_real_data = (stack_element*)calloc(capacity + COUNT_CANARY * CANARY_SIZE, sizeof(double));
+    stack->_real_data = (stack_element*)calloc(capacity + COUNT_CANARY * CANARY_SIZE, sizeof(stack_element));
 
     if (stack->_real_data == NULL) {
         log_print_error(ALLOCATION_ERROR, "stack_init: ERROR during allocation\n");
@@ -107,10 +107,10 @@ error_code_e stack_init(stack_s* const stack, const size_t capacity ON_DBG(, con
     stack->_left_canary = LEFT_CANARY;
 
     stack->struct_hash = 0;
-    stack->struct_hash = djb2_hash((const char*)stack, sizeof(*stack));
+    stack->struct_hash = djb2_hash((const unsigned char*)stack, sizeof(*stack));
 
     stack->data_hash = 0;
-    stack->data_hash = djb2_hash((const char*)stack->data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
+    stack->data_hash = djb2_hash((const unsigned char*)stack->_real_data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
 
     )
 
@@ -125,7 +125,7 @@ error_code_e stack_push(stack_s* const stack, const stack_element value) {
     if (error_code) {
         log_print_error(error_code, "stack_push: ERROR before push during stack_verify\n");
 
-        if (error_code != CANARY_IS_DEAD && error_code != HASH_CHANGED && error_code != HASH_CHANGED) {
+        if (error_code != CANARY_IS_DEAD && error_code != HASH_CHANGED) {
             log_dump_stack (stack,  "stack_push: ERROR before push during stack_verify\n");
         }
         return error_code;
@@ -134,7 +134,12 @@ error_code_e stack_push(stack_s* const stack, const stack_element value) {
     log_dump_stack(stack, "stack before push\n");
 
     if (stack->size == stack->capacity) {
-        stack_reсalloc(stack, stack->size * HIGHER_COEF);
+        error_code = stack_recalloc(stack, stack->size * HIGHER_COEF);
+
+        if (error_code) {
+            log_print_error(error_code, "stack_push: ERROR during recalloc\n");
+            return error_code;
+        }
 
         error_code = stack_verify(stack);
         if (error_code) {
@@ -154,7 +159,7 @@ error_code_e stack_push(stack_s* const stack, const stack_element value) {
     stack->data_hash   = 0;
 
     stack->struct_hash = djb2_hash((const char*)stack, sizeof(*stack));
-    stack->data_hash   = djb2_hash((const char*)stack->data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
+    stack->data_hash   = djb2_hash((const char*)stack->_real_data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
     )
 
     error_code = stack_verify(stack);
@@ -177,56 +182,67 @@ error_code_e stack_push(stack_s* const stack, const stack_element value) {
 error_code_e stack_pop(stack_s* const stack, stack_element* const value) {
     error_code_e error_code = INIT_VALUE;
 
-    if (stack->size == 0) {
-        log_print_error(POP_VOID_STACK, "stack_push: ERROR before pop try pop void stack\n");
-        log_dump_stack (stack,          "stack_push: ERROR before pop try pop void stack\n");
-        return POP_VOID_STACK;
-    }
-
-    log_dump_stack(stack, "stack before pop\n");
-
     error_code = stack_verify(stack);
     if (error_code) {
-        log_print_error(error_code, "stack_push: ERROR before pop during stack_verify\n");
+        log_print_error(error_code, "stack_pop: ERROR before pop during stack_verify\n");
 
         if (error_code != CANARY_IS_DEAD && error_code != HASH_CHANGED) {
-            log_dump_stack (stack,  "stack_push: ERROR before pop during stack_verify\n");
+            log_dump_stack (stack,  "stack_pop: ERROR before pop during stack_verify\n");
         }
         return error_code;
     }
 
+    if (stack->size == 0) {
+        log_print_error(POP_VOID_STACK, "stack_pop: ERROR before pop try pop void stack\n");
+        log_dump_stack (stack,          "stack_pop: ERROR before pop try pop void stack\n");
+        return POP_VOID_STACK;
+    }
+
+    if (value == NULL) {
+        log_print_error(NULL_PARAM, "stack_push: ERROR null value ptr\n");
+        log_dump_stack (stack,      "stack_push: ERROR null value ptr\n");
+        return NULL_PARAM;
+    }
+
+    log_dump_stack(stack, "stack before pop\n");
+
     if (stack->size <= stack->capacity / LOWER_COEF && stack->capacity / LOWER_COEF ) {
-        stack_reсalloc(stack, stack->capacity / LOWER_COEF);
+        error_code = stack_recalloc(stack, stack->capacity / LOWER_COEF);
+
+        if (error_code) {
+            log_print_error(error_code, "stack_pop: ERROR during recalloc\n");
+            return error_code;
+        }
 
         error_code = stack_verify(stack);
         if (error_code) {
-            log_print_error(error_code, "stack_push: ERROR after recalloc during stack_verify\n");
+            log_print_error(error_code, "stack_pop: ERROR after recalloc during stack_verify\n");
 
             if (error_code != CANARY_IS_DEAD && error_code != HASH_CHANGED) {
-                log_dump_stack (stack,  "stack_push: ERROR after recalloc during stack_verify\n");
+                log_dump_stack (stack,  "stack_pop: ERROR after recalloc during stack_verify\n");
             }
             return error_code;
         }
     }
 
-    *value = stack->data[stack->size];
     stack->size--;
+    *value = stack->data[stack->size];
     stack->data[stack->size] = POISON;
 
     ON_DBG(
     stack->struct_hash = 0;
     stack->data_hash   = 0;
 
-    stack->struct_hash = djb2_hash((const char*)stack, sizeof(*stack));
-    stack->data_hash   = djb2_hash((const char*)stack->data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
+    stack->struct_hash = djb2_hash((const unsigned char*)stack, sizeof(*stack));
+    stack->data_hash   = djb2_hash((const unsigned char*)stack->_real_data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
     )
 
     error_code = stack_verify(stack);
     if (error_code) {
-        log_print_error(error_code, "ERROR after pop during stack_verify\n");
+        log_print_error(error_code, "stack_pop: ERROR after pop during stack_verify\n");
 
         if (error_code != CANARY_IS_DEAD && error_code != HASH_CHANGED) {
-            log_dump_stack (stack,  "ERROR after pop during stack_verify\n");
+            log_dump_stack (stack,  "stack_pop: ERROR after pop during stack_verify\n");
         }
         return error_code;
     }
@@ -264,7 +280,7 @@ error_code_e stack_destroy(stack_s* const stack) {
 }
 
 
-error_code_e stack_reсalloc(stack_s* const stack, const size_t new_capacity) {
+error_code_e stack_recalloc(stack_s* const stack, const size_t new_capacity) {
     error_code_e error_code = INIT_VALUE;
 
     error_code = stack_verify(stack);
@@ -273,13 +289,15 @@ error_code_e stack_reсalloc(stack_s* const stack, const size_t new_capacity) {
         return error_code;
     }
 
-    stack->_real_data = (stack_element*)realloc((void*)stack->_real_data, new_capacity);
+    stack_element* new_real_data = (stack_element*)realloc((void*)stack->_real_data, (new_capacity + COUNT_CANARY) * sizeof(stack_element));
 
-    if (stack->data == NULL) {
+    if (new_real_data == NULL) {
         log_print_error(error_code, "stack_recalloc: ERROR during recalloc\n");
         return ALLOCATION_ERROR;
     }
 
+    stack->_real_data         = new_real_data;
+    stack->data               = stack->_real_data + COUNT_LEFT_CANARY;
     stack->_real_data[0]      = LEFT_CANARY;
     stack->data[new_capacity] = RIGHT_CANARY;
 
@@ -295,7 +313,7 @@ error_code_e stack_reсalloc(stack_s* const stack, const size_t new_capacity) {
     stack->data_hash   = 0;
 
     stack->struct_hash = djb2_hash((const char*)stack, sizeof(*stack));
-    stack->data_hash   = djb2_hash((const char*)stack->data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
+    stack->data_hash   = djb2_hash((const char*)stack->_real_data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
     )
 
     error_code = stack_verify(stack);

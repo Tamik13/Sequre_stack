@@ -18,9 +18,9 @@ typedef int stack_element; // Введите между typedef и stack_element
 
 #define COUNT_CANARY      2
 #define COUNT_LEFT_CANARY 1
-#define CANARY_SIZE       1      // единица измерения - sizeof(stack_elemnet)
-#define LEFT_CANARY       676767
-#define RIGHT_CANARY      696969 // TODO: hex_speak
+#define CANARY_SIZE       1          // единица измерения - sizeof(stack_elemnet)
+#define LEFT_CANARY       0xDEADBABE
+#define RIGHT_CANARY      0xBADCAFE
 
 #define TO_STR(val) #val
 
@@ -48,7 +48,7 @@ error_code_e stack_init    (stack_s* const stack, const size_t capacity ON_DBG(,
 error_code_e stack_push    (stack_s* const stack, const stack_element  value);
 error_code_e stack_pop     (stack_s* const stack, stack_element* const value);
 error_code_e stack_destroy (stack_s* const stack);
-error_code_e stack_reсalloc(stack_s* const stack, const size_t new_capacity);
+error_code_e stack_recalloc(stack_s* const stack, const size_t new_capacity);
 
 error_code_e stack_verify(stack_s* const stack);
 void print_stack         (const stack_s* const stack);

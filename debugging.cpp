@@ -1,8 +1,8 @@
 #include "debugging.h"
 
 
-void log_print(const char* const massage) {
-    assert(massage != NULL);
+void log_print(const char* const message) {
+    assert(message != NULL);
 
     FILE* log_file = fopen(LOG_FILE_NAME, "a");
 
@@ -12,7 +12,7 @@ void log_print(const char* const massage) {
     }
 
     fprintf(log_file, "\nFUNCTION: log_print DATE:%s\n", __DATE__);
-    fputs  (massage,  log_file);
+    fputs  (message,  log_file);
 
     if (fclose(log_file) == EOF) {
         PRINT_ERROR(ERROR_DURING_CLOSE);
@@ -20,7 +20,7 @@ void log_print(const char* const massage) {
     }
 }
 
-void log_print_error(error_code_e error_code, const char* const massage) {
+void log_print_error(error_code_e error_code, const char* const message) {
     FILE* log_file = fopen(LOG_FILE_NAME, "a");
 
     if (log_file == NULL) {
@@ -29,7 +29,7 @@ void log_print_error(error_code_e error_code, const char* const massage) {
     }
 
     fprintf(log_file, "\nFUNCTION: log_print_error DATE:%s\n"    , __DATE__);
-    fprintf(log_file, "%s"                                 , massage);
+    fprintf(log_file, "%s"                                 , message);
     fprintf(log_file, "ERROR error_code: %d errno_code: %s\n", error_code, strerror(errno));
 
     if (fclose(log_file) == EOF) {
@@ -39,13 +39,13 @@ void log_print_error(error_code_e error_code, const char* const massage) {
 }
 
 
-unsigned long djb2_hash(const char* str, const size_t size) {
+unsigned long djb2_hash(const unsigned char* str, const size_t size) {
     assert(str != NULL);
 
     unsigned long hash = 5381;
 
     for (size_t ind = 0; ind < size; ind++) {
-        hash = ((hash << 5) + hash) + (unsigned long)str[ind];
+        hash = ((hash << 5) + hash) + str[ind];
     }
 
     return hash;

@@ -56,10 +56,10 @@
 #define COLOR_TEXT_END          "\033[0m"
 
 #define $int(num)     $ANCHOR fprintf(stderr, COLOR_TEXT(#num, VIOLET)    " = %d\n\n",       num)
-#define $double(num)  $ANCHOR fprintf(stderr, COLOR_TEXT(#num, VIOLET)    " = %ld\n\n",      num)
+#define $double(num)  $ANCHOR fprintf(stderr, COLOR_TEXT(#num, VIOLET)    " = %lg\n\n",      num)
 #define $luint(num)   $ANCHOR fprintf(stderr, COLOR_TEXT(#num, VIOLET)    " = %lu\n\n",      num)
 #define $llint(num)   $ANCHOR fprintf(stderr, COLOR_TEXT(#num, VIOLET)    " = %lld\n\n",     num)
-#define $uint(num)    $ANCHOR fprintf(stderr, COLOR_TEXT(#num, VIOLET)    " = %ud\n\n",      num)
+#define $uint(num)    $ANCHOR fprintf(stderr, COLOR_TEXT(#num, VIOLET)    " = %u\n\n",       num)
 #define $char(symbol) $ANCHOR fprintf(stderr, COLOR_TEXT(#symbol, VIOLET) " = <%c>, %d\n\n", symbol, symbol)
 #define $string(str)  $ANCHOR fprintf(stderr, COLOR_TEXT(#str, VIOLET)    " = <%s>\n\n",     str)
 #define $size_t(num)  $ANCHOR fprintf(stderr, COLOR_TEXT(#num, VIOLET)    " = %zu\n\n",      num)
@@ -86,9 +86,9 @@ const char* const LOG_FILE_NAME = "log.txt";
 
 void start_logs     ();
 void log_print      (const char* const message);
-void log_print_error(error_code_e error,        const char* const massage);
+void log_print_error(error_code_e error,        const char* const message);
 
-unsigned long djb2_hash(const char* str, const size_t size);
+unsigned long djb2_hash(const unsigned char* str, const size_t size);
 
 void $print_strptr_arr(const char* const arr[],      const size_t size);
 void $print_str_matrix(const char* const arr,        const size_t size_x, const size_t size_y);
