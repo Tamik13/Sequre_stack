@@ -28,17 +28,18 @@ struct stack_s {
     ON_DBG(stack_element _left_canary = LEFT_CANARY;)
 
     ON_DBG(
-        const char* name     = NULL;
-        const char* file     = NULL;
-        const char* function = NULL;
-        size_t line          = 0;
-        unsigned long hash   = 0;
+        const char*   name        = NULL;
+        const char*   file        = NULL;
+        const char*   function    = NULL;
+        size_t        line        = 0;
+        unsigned long struct_hash = 0;
+        unsigned long data_hash   = 0;
     )
 
-    stack_element* _real_data = NULL; //TODO убрать из releas
+    stack_element* _real_data = NULL; //TODO убрать из release
     stack_element* data       = NULL;
-    size_t size               = 0;
-    size_t capacity           = 0;
+    size_t         size       = 0;
+    size_t         capacity   = 0;
 
     ON_DBG(stack_element _right_canary = RIGHT_CANARY;)
 };

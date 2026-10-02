@@ -8,8 +8,8 @@ int  char_cmp(const void* const first_elem, const void* const second_elem);
 int main() {
     start_logs();
     error_code_e error_code = INIT_VALUE;
-    stack_s stack = {};
-    size_t size = 1;
+    stack_s      stack      = {};
+    size_t       size       = 1;
 
     error_code = stack_init(&stack, size ON_DBG(, "stack", __FILE__, __FUNCTION__, __LINE__));
     if (error_code) {
@@ -61,24 +61,40 @@ int main() {
 //         return error_code;
 //     }
 
-//     very_smart_function(&stack);
-//
-//     error_code = stack_push(&stack, 2);
-//     if (error_code) {
-//         PRINT_ERROR(error_code)
-//         return error_code;
-//     }
+    very_smart_function(&stack);
+
+    error_code = stack_push(&stack, 2);
+    if (error_code) {
+        PRINT_ERROR(error_code)
+        return error_code;
+    }
 
 
-//     stack.name = "";
-//
-//     error_code = stack_push(&stack, 2);
-//     if (error_code) {
-//         PRINT_ERROR(error_code)
-//         return error_code;
-//     }
+    stack.name = "";
+
+    error_code = stack_push(&stack, 2);
+    if (error_code) {
+        PRINT_ERROR(error_code)
+        return error_code;
+    }
 
     stack.data = NULL;
+
+    error_code = stack_push(&stack, 2);
+    if (error_code) {
+        PRINT_ERROR(error_code)
+        return error_code;
+    }
+
+    stack.data[4] = 148;
+
+    error_code = stack_push(&stack, 2);
+    if (error_code) {
+        PRINT_ERROR(error_code)
+        return error_code;
+    }
+
+    stack.data[4] = 148;
 
     error_code = stack_push(&stack, 2);
     if (error_code) {

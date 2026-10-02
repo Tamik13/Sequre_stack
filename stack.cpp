@@ -17,16 +17,19 @@ error_code_e stack_verify(stack_s* const stack) {
         return CANARY_IS_DEAD;
     }
 
-    unsigned long old_hash = stack->hash;
-    stack->hash = 0;
-    unsigned long new_hash = djb2_hash((const char*)stack, sizeof(*stack));
+    unsigned long old_struct_hash = stack->struct_hash;
+    unsigned long old_data_hash   = stack->data_hash; // TODO: _name разобраться
+    stack->       struct_hash     = 0;
+    stack->       data_hash       = 0;
+    unsigned long new_struct_hash = djb2_hash((const char*)stack, sizeof(*stack));
 
-    if (old_hash != new_hash) {
+    if (old_struct_hash != new_struct_hash) {
         log_print_error(HASH_CHANGED, "stack_verify: ERROR new_hash != old_hash\n");
         return HASH_CHANGED;
     }
 
-    stack->hash = new_hash;
+    unsigned long new_data_hash   = djb2_hash((const char*)stack->data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
+    stack->struct_hash = new_struct_hash;
 
     if (stack->_real_data[0] != LEFT_CANARY) {
         log_print_error(NULL_STACK, "stack_verify: ERROR first canary in data IS DEAD(((\n");
@@ -37,6 +40,14 @@ error_code_e stack_verify(stack_s* const stack) {
         log_print_error(NULL_STACK, "stack_verify: ERROR second canary in data IS DEAD(((\n");
         return CANARY_IS_DEAD;
     }
+
+    if (old_data_hash != new_data_hash) {
+        log_print_error(HASH_CHANGED, "stack_verify: ERROR new_hash != old_hash\n");
+        return HASH_CHANGED;
+    }
+
+    stack->data_hash = new_data_hash;
+
     )
 
     if (stack->capacity == 0) {
@@ -55,7 +66,10 @@ error_code_e stack_verify(stack_s* const stack) {
 
 
 error_code_e stack_init(stack_s* const stack, const size_t capacity ON_DBG(, const char* const name, const char* const file, const char* const function, const size_t line)) {
-    assert(capacity != 0);
+    if (capacity == 0) {
+        log_print_error(ZERO_CAPACITY, "stack_init: ERROR try to init stack with zero capacity\n");
+        return ZERO_CAPACITY;
+    }
 
     if (is_stack_init(stack)) {
         log_print_error(REINITIALIZATION, "stack_init: ERROR try to init already initialized stack\n");
@@ -92,8 +106,12 @@ error_code_e stack_init(stack_s* const stack, const size_t capacity ON_DBG(, con
     ON_DBG(
     stack->_left_canary = LEFT_CANARY;
 
-    stack->hash = 0;
-    stack->hash = djb2_hash((const char*)stack, sizeof(*stack));
+    stack->struct_hash = 0;
+    stack->struct_hash = djb2_hash((const char*)stack, sizeof(*stack));
+
+    stack->data_hash = 0;
+    stack->data_hash = djb2_hash((const char*)stack->data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
+
     )
 
     return SUCCESS;
@@ -132,8 +150,11 @@ error_code_e stack_push(stack_s* const stack, const stack_element value) {
     stack->data[stack->size++] = value;
 
     ON_DBG(
-    stack->hash = 0;
-    stack->hash = djb2_hash((const char*)stack, sizeof(*stack));
+    stack->struct_hash = 0;
+    stack->data_hash   = 0;
+
+    stack->struct_hash = djb2_hash((const char*)stack, sizeof(*stack));
+    stack->data_hash   = djb2_hash((const char*)stack->data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
     )
 
     error_code = stack_verify(stack);
@@ -193,8 +214,11 @@ error_code_e stack_pop(stack_s* const stack, stack_element* const value) {
     stack->data[stack->size] = POISON;
 
     ON_DBG(
-    stack->hash = 0;
-    stack->hash = djb2_hash((const char*)stack, sizeof(*stack));
+    stack->struct_hash = 0;
+    stack->data_hash   = 0;
+
+    stack->struct_hash = djb2_hash((const char*)stack, sizeof(*stack));
+    stack->data_hash   = djb2_hash((const char*)stack->data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
     )
 
     error_code = stack_verify(stack);
@@ -228,11 +252,12 @@ error_code_e stack_destroy(stack_s* const stack) {
     stack->size       = 0;
 
     ON_DBG(
-        stack->hash       = 0;
-        stack->name     = NULL;
-        stack->file     = NULL;
-        stack->function = NULL;
-        stack->line     = 0;
+        stack->struct_hash = 0;
+        stack->data_hash   = 0;
+        stack->name        = NULL;
+        stack->file        = NULL;
+        stack->function    = NULL;
+        stack->line        = 0;
     )
 
     return error_code;
@@ -240,9 +265,6 @@ error_code_e stack_destroy(stack_s* const stack) {
 
 
 error_code_e stack_reсalloc(stack_s* const stack, const size_t new_capacity) {
-    assert(stack != NULL);
-    assert(new_capacity != 0);
-
     error_code_e error_code = INIT_VALUE;
 
     error_code = stack_verify(stack);
@@ -269,8 +291,11 @@ error_code_e stack_reсalloc(stack_s* const stack, const size_t new_capacity) {
     stack->capacity = new_capacity;
 
     ON_DBG(
-    stack->hash = 0;
-    stack->hash = djb2_hash((const char*)stack, sizeof(*stack));
+    stack->struct_hash = 0;
+    stack->data_hash   = 0;
+
+    stack->struct_hash = djb2_hash((const char*)stack, sizeof(*stack));
+    stack->data_hash   = djb2_hash((const char*)stack->data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
     )
 
     error_code = stack_verify(stack);
@@ -384,7 +409,7 @@ void log_dump_stack(const stack_s* const stack, const char* const reason) {
     fprintf(log_file, "\tcapacity = %zu\n", stack->capacity);
 
     ON_DBG(
-    fprintf(log_file, "\thash     = %lu\n", stack->hash);
+    fprintf(log_file, "\thash     = %lu\n", stack->struct_hash);
     )
 
     fprintf(log_file,"\t_real_data[%p]\n", stack->_real_data);

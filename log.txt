@@ -1,105 +1,105 @@
 
-FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack before push
-stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
+FUNCTION: log_dump_stack DATE:Oct  2 2026 REASON: stack before push
+stack_t "stack"[0x16b05b028] created by main() at main.cpp:14
 {
 	size     = 0
 	capacity = 1
-	hash     = 9993855268768665139
-	_real_data[0x13fe06060]
+	hash     = 11006624049454271505
+	_real_data[0x143e06060]
 	{
 		 [0] = 676767 (CANARY!!!)
 		 [1] = 1488 (POISON!!!) 
 		 [2] = 696969 (CANARY!!!)
 	}
-	data[0x13fe06064]
+	data[0x143e06064]
 	{
 		 [0] = 1488 (POISON!!!) 
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack after push
-stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
+FUNCTION: log_dump_stack DATE:Oct  2 2026 REASON: stack after push
+stack_t "stack"[0x16b05b028] created by main() at main.cpp:14
 {
 	size     = 1
 	capacity = 1
-	hash     = 11265659019173872916
-	_real_data[0x13fe06060]
+	hash     = 12278427799859479282
+	_real_data[0x143e06060]
 	{
 		 [0] = 676767 (CANARY!!!)
 		*[1] = 1
 		 [2] = 696969 (CANARY!!!)
 	}
-	data[0x13fe06064]
+	data[0x143e06064]
 	{
 		*[0] = 1
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack before push
-stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
+FUNCTION: log_dump_stack DATE:Oct  2 2026 REASON: stack before push
+stack_t "stack"[0x16b05b028] created by main() at main.cpp:14
 {
 	size     = 1
 	capacity = 1
-	hash     = 11265659019173872916
-	_real_data[0x13fe06060]
+	hash     = 12278427799859479282
+	_real_data[0x143e06060]
 	{
 		 [0] = 676767 (CANARY!!!)
 		*[1] = 1
 		 [2] = 696969 (CANARY!!!)
 	}
-	data[0x13fe06064]
+	data[0x143e06064]
 	{
 		*[0] = 1
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack after push
-stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
+FUNCTION: log_dump_stack DATE:Oct  2 2026 REASON: stack after push
+stack_t "stack"[0x16b05b028] created by main() at main.cpp:14
 {
 	size     = 2
 	capacity = 2
-	hash     = 18011466152666423766
-	_real_data[0x13fe06060]
+	hash     = 577490859642478516
+	_real_data[0x143e06060]
 	{
 		 [0] = 676767 (CANARY!!!)
 		*[1] = 1
 		*[2] = 123
 		 [3] = 696969 (CANARY!!!)
 	}
-	data[0x13fe06064]
+	data[0x143e06064]
 	{
 		*[0] = 1
 		*[1] = 123
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack before push
-stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
+FUNCTION: log_dump_stack DATE:Oct  2 2026 REASON: stack before push
+stack_t "stack"[0x16b05b028] created by main() at main.cpp:14
 {
 	size     = 2
 	capacity = 2
-	hash     = 18011466152666423766
-	_real_data[0x13fe06060]
+	hash     = 577490859642478516
+	_real_data[0x143e06060]
 	{
 		 [0] = 676767 (CANARY!!!)
 		*[1] = 1
 		*[2] = 123
 		 [3] = 696969 (CANARY!!!)
 	}
-	data[0x13fe06064]
+	data[0x143e06064]
 	{
 		*[0] = 1
 		*[1] = 123
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack after push
-stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
+FUNCTION: log_dump_stack DATE:Oct  2 2026 REASON: stack after push
+stack_t "stack"[0x16b05b028] created by main() at main.cpp:14
 {
 	size     = 3
 	capacity = 4
-	hash     = 11784532595536766073
-	_real_data[0x13fe06060]
+	hash     = 12797301376222372439
+	_real_data[0x143e06060]
 	{
 		 [0] = 676767 (CANARY!!!)
 		*[1] = 1
@@ -108,7 +108,7 @@ stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
 		 [4] = 1488 (POISON!!!) 
 		 [5] = 696969 (CANARY!!!)
 	}
-	data[0x13fe06064]
+	data[0x143e06064]
 	{
 		*[0] = 1
 		*[1] = 123
@@ -117,13 +117,13 @@ stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack before pop
-stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
+FUNCTION: log_dump_stack DATE:Oct  2 2026 REASON: stack before pop
+stack_t "stack"[0x16b05b028] created by main() at main.cpp:14
 {
 	size     = 3
 	capacity = 4
-	hash     = 11784532595536766073
-	_real_data[0x13fe06060]
+	hash     = 12797301376222372439
+	_real_data[0x143e06060]
 	{
 		 [0] = 676767 (CANARY!!!)
 		*[1] = 1
@@ -132,7 +132,7 @@ stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
 		 [4] = 1488 (POISON!!!) 
 		 [5] = 696969 (CANARY!!!)
 	}
-	data[0x13fe06064]
+	data[0x143e06064]
 	{
 		*[0] = 1
 		*[1] = 123
@@ -141,13 +141,13 @@ stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack after pop
-stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
+FUNCTION: log_dump_stack DATE:Oct  2 2026 REASON: stack after pop
+stack_t "stack"[0x16b05b028] created by main() at main.cpp:14
 {
 	size     = 2
 	capacity = 4
-	hash     = 10512728845131558296
-	_real_data[0x13fe06060]
+	hash     = 11525497625817164662
+	_real_data[0x143e06060]
 	{
 		 [0] = 676767 (CANARY!!!)
 		*[1] = 1
@@ -156,7 +156,7 @@ stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
 		 [4] = 1488 (POISON!!!) 
 		 [5] = 696969 (CANARY!!!)
 	}
-	data[0x13fe06064]
+	data[0x143e06064]
 	{
 		*[0] = 1
 		*[1] = 123
@@ -165,13 +165,13 @@ stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack before pop
-stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
+FUNCTION: log_dump_stack DATE:Oct  2 2026 REASON: stack before pop
+stack_t "stack"[0x16b05b028] created by main() at main.cpp:14
 {
 	size     = 2
 	capacity = 4
-	hash     = 10512728845131558296
-	_real_data[0x13fe06060]
+	hash     = 11525497625817164662
+	_real_data[0x143e06060]
 	{
 		 [0] = 676767 (CANARY!!!)
 		*[1] = 1
@@ -180,7 +180,7 @@ stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
 		 [4] = 1488 (POISON!!!) 
 		 [5] = 696969 (CANARY!!!)
 	}
-	data[0x13fe06064]
+	data[0x143e06064]
 	{
 		*[0] = 1
 		*[1] = 123
@@ -189,13 +189,13 @@ stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
 	}
 }
 
-FUNCTION: log_dump_stack DATE:Oct  1 2026 REASON: stack after pop
-stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
+FUNCTION: log_dump_stack DATE:Oct  2 2026 REASON: stack after pop
+stack_t "stack"[0x16b05b028] created by main() at main.cpp:14
 {
 	size     = 1
 	capacity = 4
-	hash     = 9240925094726350519
-	_real_data[0x13fe06060]
+	hash     = 10253693875411956885
+	_real_data[0x143e06060]
 	{
 		 [0] = 676767 (CANARY!!!)
 		*[1] = 1
@@ -204,7 +204,7 @@ stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
 		 [4] = 1488 (POISON!!!) 
 		 [5] = 696969 (CANARY!!!)
 	}
-	data[0x13fe06064]
+	data[0x143e06064]
 	{
 		*[0] = 1
 		 [1] = 1488 (POISON!!!) 
@@ -213,10 +213,10 @@ stack_t "stack"[0x16d30f030] created by main() at main.cpp:14
 	}
 }
 
-FUNCTION: log_print_error DATE:Oct  1 2026
-stack_verify: ERROR new_hash != old_hash
-ERROR error_code: 12 errno_code: Undefined error: 0
+FUNCTION: log_print_error DATE:Oct  2 2026
+stack_verify: ERROR first canary in struct IS DEAD(((
+ERROR error_code: 9 errno_code: Undefined error: 0
 
-FUNCTION: log_print_error DATE:Oct  1 2026
+FUNCTION: log_print_error DATE:Oct  2 2026
 stack_push: ERROR before push during stack_verify
-ERROR error_code: 12 errno_code: Undefined error: 0
+ERROR error_code: 10 errno_code: Undefined error: 0
