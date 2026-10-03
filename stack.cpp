@@ -2,18 +2,30 @@
 
 error_code_e stack_verify(stack_s* const stack) {
     if (stack == NULL) {
-        log_print_error(NULL_STACK, "stack_verify: ERROR null stack\n");
+        log_print_error(NULL_STACK, "stack_verify: ERROR stack is null\n");
+        return NULL_STACK;
+    }
+
+    if (stack->data == NULL) {
+        log_print_error(NULL_STACK, "stack_verify: ERROR stack->data is null\n");
+        return NULL_STACK;
+    }
+
+    if (stack->_real_data == NULL) {
+        log_print_error(NULL_STACK, "stack_verify: ERROR stack->_real_data is null\n");
         return NULL_STACK;
     }
 
     ON_DBG(
     if (stack->_left_canary != LEFT_CANARY) {
         log_print_error(CANARY_IS_DEAD, "stack_verify: ERROR first canary in struct IS DEAD(((\n");
+        log_dump_stack(stack, "");
         return CANARY_IS_DEAD;
     }
 
     if (stack->_right_canary != RIGHT_CANARY) {
         log_print_error(CANARY_IS_DEAD, "stack_verify: ERROR second canary in struct IS DEAD(((\n");
+        log_dump_stack(stack, "");
         return CANARY_IS_DEAD;
     }
 
@@ -25,24 +37,28 @@ error_code_e stack_verify(stack_s* const stack) {
 
     if (old_struct_hash != new_struct_hash) {
         log_print_error(HASH_CHANGED, "stack_verify: ERROR new_hash != old_hash\n");
+        log_dump_stack(stack, "");
         return HASH_CHANGED;
     }
 
-    unsigned long new_data_hash   = djb2_hash((const unsigned char*)stack->_real_data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
-    stack->struct_hash = new_struct_hash;
-
     if (stack->_real_data[0] != LEFT_CANARY) {
         log_print_error(CANARY_IS_DEAD, "stack_verify: ERROR first canary in data IS DEAD(((\n");
+        log_dump_stack(stack, "");
         return CANARY_IS_DEAD;
     }
 
     if (stack->data[stack->capacity] != RIGHT_CANARY) {
         log_print_error(CANARY_IS_DEAD, "stack_verify: ERROR second canary in data IS DEAD(((\n");
+        log_dump_stack(stack, "");
         return CANARY_IS_DEAD;
     }
 
+    unsigned long new_data_hash   = djb2_hash((const unsigned char*)stack->_real_data, sizeof(stack_element) * (stack->capacity + COUNT_CANARY));
+    stack->struct_hash = new_struct_hash;
+
     if (old_data_hash != new_data_hash) {
         log_print_error(HASH_CHANGED, "stack_verify: ERROR new_hash != old_hash\n");
+        log_dump_stack(stack, "");
         return HASH_CHANGED;
     }
 
@@ -52,6 +68,7 @@ error_code_e stack_verify(stack_s* const stack) {
 
     if (stack->capacity == 0) {
         log_print_error(ZERO_CAPACITY, "stack_verify: ERROR zero capacity\n");
+        log_dump_stack(stack, "");
         return ZERO_CAPACITY;
     }
 
@@ -104,7 +121,8 @@ error_code_e stack_init(stack_s* const stack, const size_t capacity ON_DBG(, con
     stack->data[stack->capacity] = RIGHT_CANARY;
 
     ON_DBG(
-    stack->_left_canary = LEFT_CANARY;
+    stack->_left_canary          = LEFT_CANARY;
+    stack->data[stack->capacity] = RIGHT_CANARY;
 
     stack->struct_hash = 0;
     stack->struct_hash = djb2_hash((const unsigned char*)stack, sizeof(*stack));
@@ -330,7 +348,7 @@ error_code_e stack_recalloc(stack_s* const stack, const size_t new_capacity) {
 void print_stack(const stack_s* const stack) {
     assert(stack != NULL);
 
-    ON_DBG(fprintf(stderr, "stack_t \"%s\"[%p]] created by %s() at %s:%zu)", stack->name, stack, stack->function, stack->file, stack->line));
+    ON_DBG(fprintf(stderr, "stack_s \"%s\"[%p]] created by %s() at %s:%zu)", stack->name, stack, stack->function, stack->file, stack->line));
 
     fprintf(stderr, "{\n");
     fprintf(stderr, "\tsize = %zu \n capacity = %zu\n", stack->size, stack->capacity);
@@ -344,7 +362,7 @@ void print_stack(const stack_s* const stack) {
 
     for (size_t ind = stack->size; ind < stack->capacity; ind++) {
         ASSERT_FOR_ARR(ind, stack->capacity);
-        fprintf(stderr ,"\t\t [%zu] = " STK_MODIFIER " (POISON) \n", ind, stack->data[ind]);
+        fprintf(stderr ,"\t\t [%lx] = " STK_MODIFIER " (POISON) \n", ind, stack->data[ind]);
     }
 
     fprintf(stderr ,"\t}\n");
@@ -418,9 +436,12 @@ void log_dump_stack(const stack_s* const stack, const char* const reason) {
         abort();
     }
 
-    fprintf(log_file, "\nFUNCTION: log_dump_stack DATE:%s REASON: %s", __DATE__, reason);
+    time_t tm = 0;
+    tm = time(NULL);
 
-    ON_DBG(fprintf(log_file, "stack_t \"%s\"[%p] created by %s() at %s:%zu\n", stack->name, stack, stack->function, stack->file, stack->line));
+    fprintf(log_file, "\nFUNCTION: log_dump_stack DATE:%s REASON: %s", ctime(&tm), reason);
+
+    ON_DBG(fprintf(log_file, "stack_s \"%s\"[%p] created by %s() at %s:%zu\n", stack->name, stack, stack->function, stack->file, stack->line));
 
     fprintf(log_file, "{\n");
     fprintf(log_file, "\tsize     = %zu\n", stack->size);

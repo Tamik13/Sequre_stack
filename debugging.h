@@ -2,6 +2,7 @@
 #include <assert.h>
 #include <errno.h>
 #include <string.h>
+#include <time.h>
 
 #define PRINT_ERROR(error)    \
     fprintf(stderr, "%s:%d " COLOR_TEXT("ERROR CODE: ", RED) "%s   " COLOR_TEXT("ERRNO: ", RED) "%s  %s\n",  __FILE__, __LINE__, my_str_error(error), strerror(errno), __FUNCTION__);
@@ -93,6 +94,6 @@ unsigned long djb2_hash(const unsigned char* str, const size_t size);
 void $print_strptr_arr(const char* const arr[],       const size_t size);
 void $print_str_matrix(const char* const arr,         const size_t size_x, const size_t size_y);
 void $print_int_arr   (const int         int_array[], const size_t size);
-void $print_intptr_arr(const int* const int_array[],  const size_t size);
+void $print_intptr_arr(const int* const  int_array[], const size_t size);
 
 const char* my_str_error(const error_code_e error_code);

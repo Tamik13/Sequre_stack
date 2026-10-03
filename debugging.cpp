@@ -28,7 +28,10 @@ void log_print_error(error_code_e error_code, const char* const message) {
         abort();
     }
 
-    fprintf(log_file, "\nFUNCTION: log_print_error DATE:%s\n"    , __DATE__);
+    time_t tm = 0;
+    tm = time(NULL);
+
+    fprintf(log_file, "\nFUNCTION: log_print_error DATE:%s\n", ctime(&tm));
     fprintf(log_file, "%s"                                 , message);
     fprintf(log_file, "ERROR error_code: %s errno_code: %s\n", my_str_error(error_code), strerror(errno));
 

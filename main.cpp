@@ -2,8 +2,8 @@
 #include <math.h>
 #include "stack.h"
 
-void very_smart_function(stack_s* const stack);
-int  char_cmp(const void* const first_elem, const void* const second_elem);
+void very_smart_function(stack_s* const    stack);
+int  char_cmp           (const void* const first_elem, const void* const second_elem);
 
 int main() {
     start_logs();
@@ -17,37 +17,27 @@ int main() {
         return error_code;
     }
 
-    error_code = stack_push(&stack, 1);
+    error_code = stack_push(&stack, 10);
     if (error_code) {
         PRINT_ERROR(error_code)
         return error_code;
     }
 
-    error_code = stack_push(&stack, 123);
+    error_code = stack_push(&stack, 20);
     if (error_code) {
         PRINT_ERROR(error_code)
         return error_code;
     }
 
-    error_code = stack_push(&stack, 3);
+    error_code = stack_push(&stack, 30);
     if (error_code) {
         PRINT_ERROR(error_code)
         return error_code;
     }
 
-    stack_element pop_element = 0;
 
-    error_code = stack_pop(&stack, &pop_element);
-    if (error_code != SUCCESS) {
-        PRINT_ERROR(error_code)
-        return error_code;
-    }
 
-    error_code = stack_pop(&stack, &pop_element);
-    if (error_code != SUCCESS) {
-        PRINT_ERROR(error_code)
-        return error_code;
-    }
+//     stack_element pop_element = 0;
 //
 //     error_code = stack_pop(&stack, &pop_element);
 //     if (error_code != SUCCESS) {
@@ -60,7 +50,18 @@ int main() {
 //         PRINT_ERROR(error_code)
 //         return error_code;
 //     }
-
+//
+//     error_code = stack_pop(&stack, &pop_element);
+//     if (error_code != SUCCESS) {
+//         PRINT_ERROR(error_code)
+//         return error_code;
+//     }
+//
+//     error_code = stack_pop(&stack, &pop_element);
+//     if (error_code != SUCCESS) {
+//         PRINT_ERROR(error_code)
+//         return error_code;
+//     }
 
 //     very_smart_function(&stack);
 //
@@ -87,7 +88,7 @@ int main() {
 //         return error_code;
 //     }
 
-    stack.data[4] = 148;
+    stack.data[1] = 148;
 
     error_code = stack_push(&stack, 2);
     if (error_code) {
@@ -103,7 +104,7 @@ int main() {
         return error_code;
     }
 
-
+    printf(COLOR_TEXT("SUCCESS\n", GREEN));
 
     return 0;
 }
